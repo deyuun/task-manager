@@ -3,7 +3,25 @@ const pool = require('../db.js');
 // GET /api/tasks
 async function getTasks(req, res) {
   try {
-    const result = await pool.query("SELECT * FROM tasks ORDER BY created_at DESC");
+    const { search, filter } = req.query;
+
+    let query = "SELECT * FROM tasks WHERE 1=1 ";
+    const values = [];
+
+    if (search) {
+      values.push(`%${search}%`);
+      query += `AND title ILIKE $${values.length}`;
+    }
+
+    if (filter === "active" || filter === "inactive") {
+      query += " AND completed = false";
+    } else if (filter === "completed") {
+      query += " AND completed = true";
+    }
+
+    query += " ORDER BY created_at DESC";
+
+    const result = await pool.query(query, values);
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching tasks:", error);

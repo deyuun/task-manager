@@ -29,8 +29,8 @@ function TaskItem({task, onToggleComplete, onEditTask, onDeleteTask}) {
           type='text'
           value={editDescription}
           onChange={(e) => setEditDescription(e.target.value)}
-        />
-        <div className='tast-actions'>
+        />  
+        <div className='task-actions'>
           <button onClick={handleSave}>Save</button>
           <button onClick={handleCancel}>Cancel</button>
         </div>

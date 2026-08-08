@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function TaskForm({onAddTask}) {
+function TaskForm({onSubmitTask}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
@@ -13,7 +13,7 @@ function TaskForm({onAddTask}) {
       return;
     }
 
-    onAddTask({title, description});
+    onSubmitTask({title, description});
 
     setTitle("");
     setDescription("");

@@ -42,7 +42,7 @@ function App() {
     <div className="app-container">
       <h1>Task Manager</h1>
 
-      <TaskForm onAddTask={handleAddTask}/>
+      <TaskForm onSubmitTask={handleAddTask}/>
       {error && <p className='error-text'>{error}</p>}
 
       {loading ? <p>Loading tasks...</p> : <TaskList tasks={tasks} />}

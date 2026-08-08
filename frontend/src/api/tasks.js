@@ -22,3 +22,19 @@ export async function addTask(task) {
 
   return handleResponse(response);
 }
+
+export async function editTask(id, updates) {
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json"},
+    body: JSON.stringify(updates),
+  })
+  return handleResponse(response)
+}
+
+export async function removeTask(id) {
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: "DELETE",
+  })
+  return handleResponse(response);
+}

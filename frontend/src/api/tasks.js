@@ -8,8 +8,16 @@ async function handleResponse(response) {
   return data;
 }
 
-export async function fetchTasks() {
-  const response = await fetch(BASE_URL);
+export async function fetchTasks(search, filter) {
+  const params = new URLSearchParams();
+  if (search !== "" && search !== undefined) {
+    params.append("search", search);
+  }
+  if (filter !== "" && filter !== undefined && filter !== "all") {
+    params.append("filter", filter);
+  }
+
+  const response = await fetch(`${BASE_URL}?${params.toString()}`);
   return handleResponse(response)
 }
 

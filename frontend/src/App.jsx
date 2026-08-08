@@ -3,17 +3,20 @@ import { useState } from 'react';
 import { addTask, editTask, fetchTasks, removeTask } from './api/tasks';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
+import SearchFilterBar from './components/SearchFilterBar';
 import "./App.css"
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("")
 
   async function loadTasks() {
     try {
       setLoading(true);
-      const data = await fetchTasks();
+      const data = await fetchTasks(search, filter);
       setTasks(data);
       setError("");
     } catch (error) {
@@ -63,7 +66,7 @@ function App() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadTasks();
-  }, []);
+  }, [search, filter]);
 
   
   return (
@@ -71,6 +74,13 @@ function App() {
       <h1>Task Manager</h1>
 
       <TaskForm onSubmitTask={handleAddTask}/>
+
+      <SearchFilterBar 
+        search={search}
+        onSearchChange={setSearch}
+        filter={filter}
+        onFilterChange={setFilter}  
+      />
       {error && <p className='error-text'>{error}</p>}
 
       {loading ? (

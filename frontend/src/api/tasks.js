@@ -12,3 +12,13 @@ export async function fetchTasks() {
   const response = await fetch(BASE_URL);
   return handleResponse(response)
 }
+
+export async function addTask(task) {
+  const response = await fetch(BASE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json"},
+    body: JSON.stringify(task),
+  })
+
+  return handleResponse(response);
+}

@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { fetchTasks } from './api/tasks';
+import { addTask, fetchTasks } from './api/tasks';
 import TaskList from './components/TaskList';
+import TaskForm from './components/TaskForm';
+import "./App.css"
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -21,6 +23,15 @@ function App() {
     }
   }
 
+  async function handleAddTask(newTask) {
+    try {
+      const created = await addTask(newTask);
+      setTasks((prev) => [created, ...prev]);
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadTasks();
@@ -31,6 +42,7 @@ function App() {
     <div className="app-container">
       <h1>Task Manager</h1>
 
+      <TaskForm onAddTask={handleAddTask}/>
       {error && <p className='error-text'>{error}</p>}
 
       {loading ? <p>Loading tasks...</p> : <TaskList tasks={tasks} />}

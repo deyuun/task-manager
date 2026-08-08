@@ -38,7 +38,7 @@ function App() {
   async function handleToggleComplete(id, completed) {
     try {
       const updated = await editTask(id, { completed });
-      setTasks((prevTask) => prevTask.map((task) => ( task.id === id ? updated : task)))
+      setTasks((prevTasks) => prevTasks.map((task) => ( task.id === id ? updated : task)))
     } catch (error) {
       setError(error.message)
     }
@@ -48,7 +48,7 @@ function App() {
   async function handleEditTask(id, updates) {
     try {
       const updated = await editTask(id, updates);
-      setTasks((prevTask) => prevTask.map((task) => (task.id === id ? updated : task)));
+      setTasks((prevTasks) => prevTasks.map((task) => (task.id === id ? updated : task)));
     } catch (error) {
       setError(error.message);
     }
@@ -57,7 +57,7 @@ function App() {
   async function handleDeleteTask(id) {
     try {
       await removeTask(id);
-      setTasks((prevTask) => prevTask.filter((task) => task.id !== id));
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
     } catch (error) {
       setError(error.message);
     }

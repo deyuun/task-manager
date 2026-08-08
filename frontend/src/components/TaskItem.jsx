@@ -38,7 +38,7 @@ function TaskItem({task, onToggleComplete, onEditTask, onDeleteTask}) {
     )
   }
   return (
-    <li>
+    <li className={task.completed ? "task-item completed" : "task-item"}>
       <input type='checkbox' checked={task.completed} onChange={() => onToggleComplete(task.id, !task.completed)}
       />
       

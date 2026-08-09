@@ -13,18 +13,24 @@ function App() {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("")
 
-  async function loadTasks() {
-    try {
-      setLoading(true);
-      const data = await fetchTasks(search, filter);
-      setTasks(data);
-      setError("");
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    async function loadTasks() {
+      try {
+        setLoading(true);
+        const data = await fetchTasks(search, filter);
+        setTasks(data);
+        setError("");
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+
     }
-  }
+
+    loadTasks();
+  }, [search, filter]);
+  
 
   async function handleAddTask(newTask) {
     try {
@@ -62,12 +68,6 @@ function App() {
       setError(error.message);
     }
   }
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadTasks();
-  }, [search, filter]);
-
   
   return (
     <div className="app-container">
